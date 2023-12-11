@@ -15,6 +15,7 @@ boto3 = "^1.33.11"
 python-dotenv = "^1.0.0"
 taskipy = "^1.12.2"
 loguru = "^0.7.2"
+pydantic = "^2.5.2"
 
 
 [tool.poetry.group.dev.dependencies]
