@@ -2,6 +2,10 @@
 
 Bem-vindo ao workshop 03 que enfrenta o desafio empolgante de estruturar um ambiente analítico avançado para uma grande rede de supermercados. Com mais de 300 lojas físicas e uma presença robusta no e-commerce, esta rede busca uma solução de análise de dados que habilite a diretoria a tomar decisões informadas e estratégicas baseadas em dados reais e insights valiosos.
 
+Para isso vamos construir um Lakehouse utilizando o Delta Lake, que é uma tecnologia open source, que combina os melhores aspectos dos Data Lakes e Data Warehouses, permitindo que os dados sejam armazenados em um formato colunar altamente otimizado, com suporte a ACID transactions, schema enforcement e versioning.
+
+![pic/delta-lake.png](pic/lakehouse.png)
+
 ## Objetivos do Projeto
 
 Nosso principal objetivo é fornecer uma visão holística e detalhada do desempenho de vendas, respondendo a questões cruciais como:
@@ -129,3 +133,101 @@ S3_BUCKET_NAME=nome_do_seu_bucket
 * **Nunca** compartilhe suas chaves de acesso (`AWS_ACCESS_KEY_ID` e `AWS_SECRET_ACCESS_KEY`) publicamente ou as inclua no controle de versão do seu código (como em repositórios Git).
 * Considere atribuir políticas de permissão mínimas necessárias ao usuário IAM para aumentar a segurança. Por exemplo, se o usuário só precisa acessar determinados buckets S3, configure suas permissões para limitar o acesso apenas a esses recursos.
 * Regularmente revise e gire suas chaves de acesso para manter a segurança da sua conta AWS.
+
+## Pre-commit
+
+### Commites semânticos e pre-commit
+
+1) Trabalhar com commites semânticos (como Conventional Commits)
+
+O que NÃO são commits semânticos:
+
+```bash
+git commit -m "first commit"
+git commit -m "arrumei alguns arquivos,  vai funcionar agora"
+git commit -m "agora vai… arrumei mais coisas, mas agora compila"
+```
+
+O problema com esses commits é que eles não dizem nada sobre o que foi feito. Eles não são úteis para ninguém que não seja o autor do commit, e mesmo assim, só serão úteis por um curto período de tempo.
+
+Motivos para usar:
+Commits semânticos são uma convenção para adicionar metadados (valor) aos commits. Para ele seja útil para outros usuários, para o próprio autor e para o projeto de maneira geral. Em outras palavras, o commit semântico é uma forma de padronizar os commits, para que eles sejam úteis para o projeto. No longo prazo, isso vai facilitar a manutenção do projeto, e vai ajudar a entender o que foi feito em cada commit, diminuir o tempo de onboarding de novos desenvolvedores, e facilitar a busca por bugs.
+
+Motivos para não usar:
+Preguiça, falta de conhecimento, falta de tempo, falta de disciplina, etc.
+ 
+O formato é o seguinte:
+```bash
+<tipo>: <descrição>
+```
+
+Os tipos disponíveis são:
+- feat: nova funcionalidade
+- fix: correção de bug
+- docs: alteração na documentação
+- style: formatação de código, ponto e vírgula faltando, etc; - não altera o significado
+- refactor: refatoração de código, sem alterar a semântica
+- test: adição ou correção de testes
+- chore: alterações no processo de build, atualização de - dependências, etc; não altera o código em si
+
+Exemplo 1: 
+```bash
+feat: acidicionado camada de Delta Lake
+```
+
+Exemplo 2:
+```bash
+fix: corrigido bug de escrita no Delta Lake
+```
+
+Exemplo 3:
+```bash
+docs: adicionado documentação sobre Delta Lake
+```
+
+O grande desafio é fazer com que todos os desenvolvedores sigam essa convenção. Para isso, vamos automatizar o processo de commit, utilizando o [Commitizen](https://github.com/commitizen-tools/commitizen) e uma ferramenta de [pre-commit](https://pre-commit.com/) para garantir que os commits sejam feitos de acordo com a convenção.
+
+Para instalar o Commitizen, vamos utilizar o [Poetry](https://python-poetry.org/)
+
+```bash
+poetry add commitizen --group dev
+```
+
+Na maior parte do tempo só vamos usar o comando `cz commit` para fazer os commits
+
+```bash
+cz commit
+```
+
+Para garantir que não vamos esquecer do commit semantico, vamos utilizar o [pre-commit](https://pre-commit.com/)
+
+```bash
+poetry add pre-commit --group dev
+```
+
+Para configurar o pre-commit, vamos criar um arquivo `.pre-commit-config.yaml` na raiz do projeto, com o seguinte conteúdo:
+
+```yaml
+repos:
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: master
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+```
+
+Para instalar os hooks do pre-commit, vamos executar o seguinte comando:
+
+```bash
+pre-commit install --hook-type commit-msg
+```
+
+Agora, sempre que executarmos o comando `cz commit`, vamos ser guiados para fazer o commit semântico.
+
+![pic/pre-commit02.png](pic/pre-commit02.png)
+
+Se tentarmos fazer um commit sem ser semântico, vamos receber uma mensagem de erro
+
+![pic/pre-commit01.png](pic/pre-commit01.png)
+
+Dessa forma, garantimos que todos os commits vão seguir a convenção, e que os commits vão ser úteis para o projeto.
