@@ -1,6 +1,21 @@
 repos:
   - repo: https://github.com/commitizen-tools/commitizen
-    rev: 3.12.0
+    rev: v3.13.0
     hooks:
       - id: commitizen
         stages: [commit-msg]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    # Ruff version.
+    rev: v0.1.7
+    hooks:
+      # Run the linter.
+      - id: ruff
+      # Run the formatter.
+      - id: ruff-format
+
+  # Adicionando isort
+  - repo: https://github.com/pycqa/isort
+    rev: '5.13.0'  # Substitua pela versão desejada de isort
+    hooks:
+      - id: isort

@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class S3Config(BaseModel):
     bucket_name: str
     file_name: str
