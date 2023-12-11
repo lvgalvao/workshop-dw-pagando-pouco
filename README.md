@@ -1,12 +1,27 @@
-# Um DW pagando pouco
+# Estruturando um DW pagando barato
 
 Bem-vindo ao workshop 03 que enfrenta o desafio empolgante de estruturar um ambiente analítico avançado para uma grande rede de supermercados. Com mais de 300 lojas físicas e uma presença robusta no e-commerce, esta rede busca uma solução de análise de dados que habilite a diretoria a tomar decisões informadas e estratégicas baseadas em dados reais e insights valiosos.
 
-Para isso vamos construir um Lakehouse utilizando o Delta Lake, que é uma tecnologia open source, que combina os melhores aspectos dos Data Lakes e Data Warehouses, permitindo que os dados sejam armazenados em um formato colunar altamente otimizado, com suporte a ACID transactions, schema enforcement e versioning.
-
 ![pic/delta-lake.png](pic/lakehouse.png)
 
-## Objetivos do Projeto
+Para isso vamos construir um Lakehouse utilizando o Delta Lake, que é uma tecnologia open source, que combina os melhores aspectos dos Data Lakes e Data Warehouses, permitindo que os dados sejam armazenados em um formato colunar altamente otimizado, com suporte a ACID transactions, schema enforcement e versioning.
+
+## Índice
+
+- [Estruturando um DW pagando barato](#estruturando-um-dw-pagando-barato)
+  - [Índice](#índice)
+  - [Objetivo](#objetivo)
+  - [Desafios e Considerações Econômicas](#desafios-e-considerações-econômicas)
+  - [Motivação](#motivação)
+  - [Desafio](#desafio)
+  - [Estrutura do projeto](#estrutura-do-projeto)
+    - [Explicação da Estrutura:](#explicação-da-estrutura)
+  - [AWS](#aws)
+    - [Notas de Segurança:](#notas-de-segurança)
+  - [Pre-commit](#pre-commit)
+    - [Commites semânticos e pre-commit](#commites-semânticos-e-pre-commit)
+
+## Objetivo
 
 Nosso principal objetivo é fornecer uma visão holística e detalhada do desempenho de vendas, respondendo a questões cruciais como:
 
@@ -100,17 +115,17 @@ Vamos utilizar o serviço S3 da AWS para armazenar os dados brutos e processados
 
 Para encontrar as informações necessárias, como `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY` e o nome do seu bucket S3 na AWS (Amazon Web Services), você pode seguir estes passos:
 
-### 1. **AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY**
+1. **AWS_ACCESS_KEY_ID e AWS_SECRET_ACCESS_KEY**
 
 Essas credenciais são parte das suas chaves de acesso da AWS. Para obtê-las, você deve criar ou usar uma chave de acesso existente no IAM (Identity and Access Management) da AWS. Veja como:
 
-* Faça login no [Console de Gerenciamento da AWS](https://aws.amazon.com/console/).
+  Faça login no [Console de Gerenciamento da AWS](https://aws.amazon.com/console/).
 * Navegue até o serviço IAM.
 * No painel de navegação, escolha "Usuários".
 * Escolha o seu usuário IAM (ou crie um novo usuário se necessário).
 * Na aba "Credenciais de segurança", você pode criar uma nova chave de acesso. Ao criar uma nova chave, você receberá o `AWS_ACCESS_KEY_ID` e o `AWS_SECRET_ACCESS_KEY`. Lembre-se de baixar e guardar essas chaves em um lugar seguro, pois o `AWS_SECRET_ACCESS_KEY` não pode ser recuperado depois de criado.
 
-### 2. **Nome do Bucket S3**
+2. **Nome do Bucket S3**
 
 Para encontrar o nome do seu bucket S3:
 
@@ -118,7 +133,7 @@ Para encontrar o nome do seu bucket S3:
 * Navegue até o serviço Amazon S3.
 * Você verá uma lista de buckets S3. Procure pelo bucket que deseja usar e copie o nome exato.
 
-### 3. **Configuração do Arquivo `.env`**
+3. **Configuração do Arquivo `.env`**
 
 Após obter essas informações, você pode configurar o arquivo `.env` no seu projeto local da seguinte forma:
 
