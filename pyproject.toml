@@ -16,6 +16,7 @@ python-dotenv = "^1.0.0"
 taskipy = "^1.12.2"
 loguru = "^0.7.2"
 pydantic = "^2.5.2"
+notebook = "^7.0.6"
 
 
 [tool.poetry.group.dev.dependencies]
