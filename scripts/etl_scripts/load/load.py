@@ -1,21 +1,50 @@
-# load/load.py
+# etl_scripts/load/load.py
+
 import boto3
 from io import BytesIO
 import pyarrow.parquet as pq
 from utility_scripts.logging_utils import log
+from abc import ABC, abstractmethod
+from deltalake.writer import write_deltalake
+from .models.s3_config import S3Config  # Importando o S3Config
 
-@log
-def save_to_s3(table, bucket_name, file_name, aws_access_key_id, aws_secret_access_key):
-    # Convertendo para Parquet usando PyArrow
-    buffer = BytesIO()
-    pq.write_table(table, buffer)
+class S3Saver(ABC):
+    @log
+    def save_to_s3(self, table, config: S3Config, **kwargs):
+        buffer = BytesIO()
+        self.write_format(table, buffer, config, **kwargs)
 
-    # Configuração do cliente S3
-    s3_client = boto3.client(
-        's3',
-        aws_access_key_id=aws_access_key_id,
-        aws_secret_access_key=aws_secret_access_key
-    )
+    @abstractmethod
+    def write_format(self, table, buffer, config: S3Config, **kwargs):
+        pass
 
-    # Salvar no S3
-    s3_client.put_object(Bucket=bucket_name, Key=file_name, Body=buffer.getvalue())
+class ParquetSaver(S3Saver):
+    def write_format(self, table, buffer, config: S3Config, **kwargs):
+        pq.write_table(table, buffer)
+        self.upload_to_s3(buffer, config)
+
+    def upload_to_s3(self, buffer, config: S3Config):
+        s3_client = boto3.client(
+            's3',
+            aws_access_key_id=config.aws_access_key_id,
+            aws_secret_access_key=config.aws_secret_access_key
+        )
+        s3_client.put_object(Bucket=config.bucket_name, Key=config.file_name, Body=buffer.getvalue())
+
+class DeltaLakeSaver(S3Saver):
+    def write_format(self, table, buffer, config: S3Config, **kwargs):
+        delta_table_uri = f's3://{config.bucket_name}/{config.file_name}'
+
+        storage_options = {
+            "AWS_ACCESS_KEY_ID": config.aws_access_key_id, 
+            "AWS_SECRET_ACCESS_KEY": config.aws_secret_access_key,
+            "region": config.aws_region
+        }
+
+        write_deltalake(
+            data=table, 
+            table_or_uri=delta_table_uri, 
+            mode="overwrite",
+            overwrite_schema=True,
+            storage_options=storage_options
+        )
