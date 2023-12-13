@@ -14,6 +14,20 @@ Para isso vamos construir um Lakehouse utilizando o Delta Lake, que é uma tecno
   - [Desafios e Considerações Econômicas](#desafios-e-considerações-econômicas)
   - [Motivação](#motivação)
   - [Desafio](#desafio)
+  - [Como começar um projeto de DW?](#como-começar-um-projeto-de-dw)
+  - [Decisões de negócio](#decisões-de-negócio)
+    - [Qual será o business case?](#qual-será-o-business-case)
+    - [Qual será a granularidade dos dados?](#qual-será-a-granularidade-dos-dados)
+    - [Quais são minhas tabelas de fatos?](#quais-são-minhas-tabelas-de-fatos)
+    - [Quais são minhas tabelas de dimensões?](#quais-são-minhas-tabelas-de-dimensões)
+  - [Decisões técnicas de arquitetura](#decisões-técnicas-de-arquitetura)
+    - [Quais são minhas fontes de dados?](#quais-são-minhas-fontes-de-dados)
+    - [Como definir soluções de ingestão](#como-definir-soluções-de-ingestão)
+    - [Transformação](#transformação)
+    - [Catalog](#catalog)
+    - [Storage](#storage)
+    - [Quais produtos vou querer?](#quais-produtos-vou-querer)
+  - [Desafio Técnico](#desafio-técnico)
   - [Estrutura do projeto](#estrutura-do-projeto)
     - [Explicação da Estrutura:](#explicação-da-estrutura)
   - [AWS](#aws)
@@ -51,6 +65,35 @@ Neste projeto, vamos montar um DW com as seguintes características:
 - Ingestão de dados com vendas das lojas físicas totalizando 1 milhão de linhas diárias
 - Ingestão de dados via API com vendas do Ecommerce a cada hora
 - Ingestão da dados via Excel com catalogo de produtos atualizado a cada 3 dias
+
+## Como começar um projeto de DW?
+
+## Decisões de negócio
+
+### Qual será o business case?
+
+### Qual será a granularidade dos dados?
+
+### Quais são minhas tabelas de fatos?
+
+### Quais são minhas tabelas de dimensões?
+
+## Decisões técnicas de arquitetura
+
+### Quais são minhas fontes de dados?
+
+### Como definir soluções de ingestão
+
+### Transformação
+
+### Catalog
+
+### Storage
+
+### Quais produtos vou querer?
+
+
+## Desafio Técnico
 
 ## Estrutura do projeto
 
@@ -246,3 +289,31 @@ Se tentarmos fazer um commit sem ser semântico, vamos receber uma mensagem de e
 ![pic/pre-commit01.png](pic/pre-commit01.png)
 
 Dessa forma, garantimos que todos os commits vão seguir a convenção, e que os commits vão ser úteis para o projeto.
+
+Módulos Faker: Simulando um Banco de Transações de um POS
+Dentro deste projeto, desenvolvemos um conjunto de módulos chamados faker que têm como objetivo simular um banco de transações de um Ponto de Venda (POS - Point of Sale). Esses módulos são essenciais para criar dados de transações de vendas realistas e volumosos, que são cruciais para testar e desenvolver nosso Data Warehouse (DW) de forma eficaz. Vamos dar uma olhada em como esses módulos funcionam e por que eles são importantes.
+
+O Que São os Módulos Faker?
+Os módulos faker são componentes do projeto que geram dados fictícios de transações de vendas que se assemelham a transações reais em um ambiente de varejo. Eles são responsáveis por criar registros de vendas, incluindo informações como:
+
+Data e hora da transação.
+Itens comprados.
+Quantidades de itens.
+Preços unitários.
+Forma de pagamento.
+Informações do cliente (geralmente anonimizadas).
+Por Que São Importantes?
+Testes de Desempenho e Escalabilidade: Para garantir que nosso DW possa lidar com grandes volumes de dados, precisamos de dados de teste realistas. Os módulos faker nos permitem criar milhões de transações fictícias, o que é essencial para testar o desempenho e a escalabilidade do DW.
+
+Desenvolvimento e Depuração: Durante o desenvolvimento do DW, é fundamental ter dados de teste que simulem situações do mundo real. Os módulos faker nos ajudam a criar dados de transações que podem ser usados para depurar e verificar a funcionalidade do DW.
+
+Confidencialidade dos Dados: Trabalhar com dados reais de transações pode ser problemático devido a preocupações com privacidade e confidencialidade dos clientes. Os dados gerados pelos módulos faker são completamente fictícios e não representam informações reais de clientes ou transações, o que elimina preocupações de confidencialidade.
+
+Flexibilidade de Testes: Os módulos faker são altamente configuráveis, permitindo que ajustemos diversos parâmetros, como a taxa de geração de transações, o intervalo de datas e os tipos de produtos. Isso nos dá a flexibilidade de criar cenários de teste específicos conforme necessário.
+
+Utilização dos Módulos Faker
+Os módulos faker podem ser chamados a partir de scripts e processos de ETL para gerar registros de transações fictícias. Eles fornecem uma API simples para configurar os parâmetros de geração de dados, como a quantidade de transações desejadas, a faixa de datas para as transações e os tipos de produtos a serem incluídos nas transações.
+
+A utilização desses módulos é crucial para garantir que nosso DW seja robusto, eficiente e capaz de atender às necessidades de análise de dados da empresa.
+
+No geral, os módulos faker desempenham um papel fundamental na simulação de um ambiente realista de transações de vendas, permitindo-nos desenvolver, testar e depurar nosso DW de forma eficaz, ao mesmo tempo em que protegem a privacidade dos clientes e a confidencialidade dos dados.
