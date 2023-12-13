@@ -19,6 +19,9 @@ pydantic = "^2.5.2"
 notebook = "^7.0.6"
 isort = "^5.13.0"
 ruff = "^0.1.7"
+faker = "^20.1.0"
+psycopg2-binary = "^2.9.9"
+python-decouple = "^3.8"
 
 
 [tool.poetry.group.dev.dependencies]
