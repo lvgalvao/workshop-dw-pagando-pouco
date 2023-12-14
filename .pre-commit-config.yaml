@@ -13,9 +13,3 @@ repos:
       - id: ruff
       # Run the formatter.
       - id: ruff-format
-
-  # Adicionando isort
-  - repo: https://github.com/pycqa/isort
-    rev: '5.13.0'  # Substitua pela versão desejada de isort
-    hooks:
-      - id: isort
