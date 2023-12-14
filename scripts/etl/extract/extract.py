@@ -1,4 +1,3 @@
-import duckdb
 import pyarrow as pa
 from utility_scripts.logging_utils import log
 
@@ -21,14 +20,4 @@ def extract_transaction():
 
     # Convertendo o dicionário em um pyarrow.Table
     arrow_table = pa.Table.from_pydict(data_dict)
-
-    # Carregando os dados no DuckDB a partir de um pyarrow.Table
-    con = duckdb.connect(database=":memory:")
-    con.register("transactions", arrow_table)
-    con.execute("CREATE TABLE transactions AS SELECT * FROM transactions")
-
-    # Lendo os dados de volta em um DataFrame do DuckDB
-    duckdb_df = con.execute("SELECT * FROM transactions").fetch_arrow_table()
-
-    con.close()
-    return duckdb_df
+    return arrow_table

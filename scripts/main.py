@@ -1,13 +1,16 @@
 import os
 
 from dotenv import load_dotenv
-from etl.extract.extract import (
-    extract_transaction,
-)  # Certifique-se de que isso importa a função correta
+from etl.extract.extract import extract_transaction
 from etl.load.load import DeltaLakeSaver
 from etl.load.s3_config_model import S3Config
+from etl.transformation.tranformation import (
+    transform_transaction_table,
+)  # Importar a função de transformação
+from utility_scripts.logging_utils import log
 
 
+@log
 def main():
     # Carregar as variáveis de ambiente do .env
     load_dotenv()
@@ -24,10 +27,15 @@ def main():
     # Extração de dados
     extracted_data = extract_transaction()
 
+    # Transformação dos dados
+    transformed_data = transform_transaction_table(
+        extracted_data, datasource_value=os.getenv("DB_NAME")
+    )
+
     # Carregamento dos dados no S3 como Delta Table
-    # Assumindo que extracted_data é um pyarrow.Table ou compatível
+    # Assumindo que transformed_data é um pyarrow.Table ou compatível
     saver = DeltaLakeSaver()
-    saver.save_to_s3(extracted_data, s3_config)
+    saver.save_to_s3(transformed_data, s3_config)
 
 
 if __name__ == "__main__":
