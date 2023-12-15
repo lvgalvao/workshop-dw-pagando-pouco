@@ -21,8 +21,8 @@ ruff = "^0.1.7"
 faker = "^20.1.0"
 psycopg2-binary = "^2.9.9"
 python-decouple = "^3.8"
-dbt-duckdb = "^1.7.0"
-dbt-core = "^1.7.4"
+streamlit = "^1.29.0"
+openpyxl = "^3.1.2"
 
 
 [tool.poetry.group.dev.dependencies]
