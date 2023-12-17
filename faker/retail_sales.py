@@ -45,7 +45,7 @@ def generate_daily_sales(
     day,
     price_variation,
     store,
-    num_sales_range=(4000, 6000),
+    num_sales_range=(350, 450),
     products_per_sale_range=(5, 50),
     quantity_per_product_range=(1, 20),
 ):
@@ -63,8 +63,8 @@ def generate_daily_sales(
         transaction_time = generate_transaction_time(day)
         transaction_id = faker.uuid4()  # Usando Faker para gerar o ID da transação
 
-        pos_number = random.randint(0, 20)
-        operator = random.randint(0, 60)
+        pos_number = random.randint(1, 20)
+        operator = random.randint(1, 60)
 
         for _ in range(num_products_in_sale):
             product = random.choice(products)
@@ -99,33 +99,33 @@ def save_sales_to_csv(sales_data, filename):
         writer = csv.writer(file)
         writer.writerow(
             [
-                "Pos Number",
-                "Pos System",
-                "Pos Version",
-                "Pos Last Maintenance",
-                "Operator",
-                "Transaction ID",
-                "Transaction Time",
-                "EAN",
-                "Product Name",
-                "Price",
-                "Store",
+                "transaction_id",
+                "transaction_time",
+                "ean",
+                "product_name",
+                "price",
+                "store",
+                "pos_number",
+                "pos_system",
+                "pos_version",
+                "pos_last_maintenance",
+                "operator",
             ]
         )
         for sale in sales_data:
             writer.writerow(
                 [
-                    sale["Pos Number"],
-                    sale["Pos System"],
-                    sale["Pos Version"],
-                    sale["Pos Last Maintenance"],
-                    sale["Operator"],
                     sale["Transaction ID"],
                     sale["Transaction Time"],
                     sale["EAN"],
                     sale["Product Name"],
                     sale["Price"],
                     sale["Store"],
+                    sale["Pos Number"],
+                    sale["Pos System"],
+                    sale["Pos Version"],
+                    sale["Pos Last Maintenance"],
+                    sale["Operator"],
                 ]
             )
     print(f"Dados de vendas salvos em '{filename}'")
@@ -146,10 +146,10 @@ if __name__ == "__main__":
     # print("Dados salvos em 'products_mapping_with_prices.csv'")
 
     products = read_products_from_csv("data/products_mapping_with_prices.csv")
-    for loja in range(1, 1):
+    for loja in range(8, 15):
         all_sales = []
-        for day in range(1):
-            price_variation = random.uniform(-0.2, 0.1)
+        for day in range(10):
+            price_variation = random.uniform(-1.0, 2.0)
             daily_sales = generate_daily_sales(products, day, price_variation, loja)
             all_sales.extend(daily_sales)
         save_sales_to_csv(all_sales, f"data/daily_sales_retail_{loja}.csv")

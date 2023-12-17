@@ -1,13 +1,12 @@
 import os
 
 from dotenv import load_dotenv
-from sqlalchemy import (Column, Date, DateTime, Float, Integer, String,
-                        create_engine)
+from sqlalchemy import Column, Date, DateTime, Float, Integer, String, create_engine
 from sqlalchemy.orm import declarative_base
 
 load_dotenv()
 
-DATABASE_URI = f"postgresql+psycopg2://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}/{os.getenv('DB_NAME')}"
+DATABASE_URI = f"postgresql+psycopg2://{os.getenv('2_DB_USER')}:{os.getenv('2_DB_PASSWORD')}@{os.getenv('2_DB_HOST')}/{os.getenv('2_DB_NAME')}"
 Base = declarative_base()
 
 

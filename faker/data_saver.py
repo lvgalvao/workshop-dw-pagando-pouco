@@ -44,40 +44,29 @@ def save_sales_to_csv(sales_data, filename):
 
 
 def copy_csv_to_db(csv_filename, table_name, conn_str):
-    # Carregar dados do CSV para a tabela no banco de dados
     engine = create_engine(conn_str)
     Session = sessionmaker(bind=engine)
     session = Session()
 
-    # Mapear os nomes das colunas do CSV para os nomes das colunas da classe Transaction
-    column_mapping = {
-        "Pos Number": "pos_number",
-        "Pos System": "pos_system",
-        "Pos Version": "pos_version",
-        "Pos Last Maintenance": "pos_last_maintenance",
-        "Operator": "operator",
-        "Transaction ID": "transaction_id",
-        "Transaction Time": "transaction_time",
-        "EAN": "ean",
-        "Product Name": "product_name",
-        "Price": "price",
-        "Store": "store",
-    }
-
-    # No loop que lê as linhas do CSV, faça a correspondência das colunas
     with open(csv_filename, "r", encoding="utf-8") as file:
         reader = csv.DictReader(file)
         for row in reader:
-            # Remapeie os nomes das colunas do CSV para os nomes das colunas da classe Transaction
-            mapped_row = {column_mapping[key]: value for key, value in row.items()}
-
-            # Faça a conversão das datas e horas aqui, se necessário
-
-            # Crie uma instância do modelo Transaction com os dados do CSV mapeados
-            transaction = Transaction(**mapped_row)
+            transaction_data = {
+                "pos_number": row["pos_number"],
+                "pos_system": row["pos_system"],
+                "pos_version": float(row["pos_version"]),
+                "pos_last_maintenance": row["pos_last_maintenance"],
+                "operator": int(row["operator"]),
+                "transaction_id": row["transaction_id"],
+                "transaction_time": row["transaction_time"],
+                "ean": row["ean"],
+                "product_name": row["product_name"],
+                "price": float(row["price"]),
+                "store": int(row["store"]),
+            }
+            transaction = Transaction(**transaction_data)
             session.add(transaction)
 
     session.commit()
     session.close()
-
     print(f"Dados de vendas copiados para a tabela '{table_name}' no banco de dados")

@@ -8,7 +8,7 @@ from ..db.transactions_model import Transaction
 @log
 def extract_transaction():
     session = Session()
-    data = session.query(Transaction).all()
+    data = session.query(Transaction).limit(100).all()
     session.close()
 
     # Convertendo os objetos SQLAlchemy em um dicionário

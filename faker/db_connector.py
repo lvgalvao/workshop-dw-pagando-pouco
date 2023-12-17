@@ -9,10 +9,10 @@ load_dotenv()
 def connect_to_db():
     try:
         conn = psycopg2.connect(
-            dbname=os.getenv("DB_NAME"),
-            user=os.getenv("DB_USER"),
-            password=os.getenv("DB_PASSWORD"),
-            host=os.getenv("DB_HOST"),
+            dbname=os.getenv("2_DB_NAME"),
+            user=os.getenv("2_DB_USER"),
+            password=os.getenv("2_DB_PASSWORD"),
+            host=os.getenv("2_DB_HOST"),
         )
         return conn
     except Exception as e:
