@@ -1,8 +1,6 @@
 INSTALL httpfs;
 LOAD httpfs;
 SET s3_region='us-west-1';
-SET s3_access_key_id='AKIAVT43ONYSMGH55GXK';
-SET s3_secret_access_key='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';
 CREATE TABLE transacao AS SELECT * FROM read_parquet('s3://workshop03-salesrecord/postgres/postgres_z8k5-2023-12-17T05:33:54.parquet.parquet');
 CREATE OR REPLACE TABLE store AS SELECT * FROM read_parquet('s3://workshop03-salesrecord/loja.parquet');
 CREATE TABLE catalogo AS SELECT * FROM read_parquet('s3://workshop03-salesrecord/catalogo.parquet');
