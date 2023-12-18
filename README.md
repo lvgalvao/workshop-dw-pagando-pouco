@@ -1,8 +1,10 @@
 # Estruturando um DW pagando barato
 
-Bem-vindo ao workshop 03 que enfrenta o desafio empolgante de estruturar um ambiente analítico avançado para uma grande rede de supermercados. Com mais de 300 lojas físicas e uma presença robusta no e-commerce, esta rede busca uma solução de análise de dados que habilite a diretoria a tomar decisões informadas e estratégicas baseadas em dados reais e insights valiosos.
+Esse repositório foi construído durante o Workshop 03, que aconteceu no dia 17/12/2023, com o objetivo de estruturar um ambiente analítico avançado pagando pouco.
 
-![pic/delta-lake.png](pic/lakehouse.png)
+![pic/delta-lake.png](pic/workshop.jpeg)
+
+Bem-vindo ao workshop 03 que enfrenta o desafio empolgante de estruturar um ambiente analítico avançado para uma grande rede de supermercados. Com mais de 300 lojas físicas e uma presença robusta no e-commerce, esta rede busca uma solução de análise de dados que habilite a diretoria a tomar decisões informadas e estratégicas baseadas em dados reais e insights valiosos.
 
 Para isso vamos construir um Lakehouse utilizando o Delta Lake, que é uma tecnologia open source, que combina os melhores aspectos dos Data Lakes e Data Warehouses, permitindo que os dados sejam armazenados em um formato colunar altamente otimizado, com suporte a ACID transactions, schema enforcement e versioning.
 
